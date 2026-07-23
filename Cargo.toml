@@ -1,9 +1,12 @@
 [package]
-name = "os_in_rust"
+name = "os_on_rust"
 version = "0.1.0"
 edition = "2024"
 
 [[bin]]
-name = "os_in_rust"
+name = "os_on_rust"
 test = false
 bench = false
+
+[dependencies]
+bootloader = "0.9"
