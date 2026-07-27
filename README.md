@@ -25,8 +25,8 @@
 
 ## Установка зависимостей
 1. Rust - [setup Rust](https://rust-lang.org/tools/install/)
-    Убедитесь, что Rust установлен:
 
+    Убедитесь, что Rust установлен:
     ```bash
     rustc --version
     cargo --version
