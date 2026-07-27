@@ -3,6 +3,10 @@ name = "os_on_rust"
 version = "0.1.0"
 edition = "2024"
 
+[[test]]
+name = "should_panic"
+harness = false
+
 [[bin]]
 name = "os_on_rust"
 test = true
