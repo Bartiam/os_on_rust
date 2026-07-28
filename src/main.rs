@@ -17,10 +17,7 @@ pub extern "C" fn _start() -> ! {
     test_main();
 
     println!("It did not crash!");
-    loop {
-        use os_on_rust::print;
-        print!("-");
-    }
+    os_on_rust::hlt_loop();
 }
 
 /// This function is called on panic.
@@ -28,7 +25,7 @@ pub extern "C" fn _start() -> ! {
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     println!("{}", info);
-    loop {}
+    os_on_rust::hlt_loop();
 }
 
 #[cfg(test)]
