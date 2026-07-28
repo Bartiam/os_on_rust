@@ -13,16 +13,14 @@ pub extern "C" fn _start() -> ! {
     
     os_on_rust::init();
 
-    fn stack_overflow() {
-        stack_overflow();
-    }
-
-    stack_overflow();
-
     #[cfg(test)]
     test_main();
 
-    loop {}
+    println!("It did not crash!");
+    loop {
+        use os_on_rust::print;
+        print!("-");
+    }
 }
 
 /// This function is called on panic.
