@@ -42,7 +42,7 @@
 2. Скачайте репозиторий и установите Rust Nightly активным только для этого репозитория:
 
     ```bash
-    git clone <URL-репозитория>
+    git clone https://github.com/Bartiam/os_on_rust.git
     cd os_on_rust
     rustup override set nightly
 
