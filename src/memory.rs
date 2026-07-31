@@ -8,6 +8,15 @@ use x86_64::{
     structures::paging::{Page, PhysFrame, Mapper, Size4KiB, FrameAllocator}
 };
 
+/// A FrameAllocator that always returns `None`.
+pub struct EmptyFrameAllocator;
+
+unsafe impl FrameAllocator<Size4KiB> for EmptyFrameAllocator {
+    fn allocate_frame(&mut self) -> Option<PhysFrame> {
+        None
+    }
+}
+
 /// Initialize a new OffsetPageTable.
 ///
 /// This function is unsafe because the caller must guarantee that the
