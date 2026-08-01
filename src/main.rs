@@ -7,11 +7,20 @@
 extern crate alloc;
 
 use alloc::{boxed::Box, vec, vec::Vec, rc::Rc};
-use core::panic::PanicInfo;
+use core::{panic::PanicInfo};
 use os_on_rust::println;
 use bootloader::{BootInfo, entry_point};
 
 entry_point!(kernel_main);
+
+async fn async_number() -> u32 {
+    42
+}
+
+async fn example_task() {
+    let number = async_number().await;
+    println!("async namber: {}", number);
+}
 
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
     use os_on_rust::memory::{self, BootInfoFrameAllocator};
