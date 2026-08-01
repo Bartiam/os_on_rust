@@ -1,4 +1,8 @@
 use linked_list_allocator::LockedHeap;
+use linked_list::LinkedListAllocator;
+use bump::BumpAllocator;
+use fixed_size_block::FixedSizeBlockAllocator;
+
 use alloc::alloc::{GlobalAlloc, Layout};
 use core::ptr::null_mut;
 use x86_64::{
@@ -8,8 +12,39 @@ use x86_64::{
     VirtAddr,
 };
 
+pub mod bump;
+pub mod linked_list;
+pub mod fixed_size_block;
+
+pub struct Locked<A> {
+    inner: spin::Mutex<A>,
+}
+
+impl<A> Locked<A> {
+    pub const fn new(inner: A) -> Self {
+        Locked {
+            inner: spin::Mutex::new(inner),
+        }
+    }
+
+    pub fn lock(&self) -> spin::MutexGuard<A> {
+        self.inner.lock()
+    }
+}
+
+/// align addr by align to the upper value
+fn align_up(addr: usize, align: usize) -> usize {
+    let remainder = addr % align;
+    if remainder == 0 {
+        addr // the addr is already aligned
+    } else {
+        addr - remainder + align
+    }
+}
+
 #[global_allocator]
-static ALLOCATOR: LockedHeap = LockedHeap::empty();
+static ALLOCATOR: Locked<FixedSizeBlockAllocator> = Locked::new(
+    FixedSizeBlockAllocator::new());
 
 pub const HEAP_START: usize = 0x_4444_4444_0000;
 pub const HEAP_SIZE: usize = 100 * 1024; // 100 Кб
